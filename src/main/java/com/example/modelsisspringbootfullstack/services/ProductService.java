@@ -1,9 +1,11 @@
 package com.example.modelsisspringbootfullstack.services;
 
 import com.example.modelsisspringbootfullstack.entities.Product;
+import com.example.modelsisspringbootfullstack.entities.ProductType;
 import com.example.modelsisspringbootfullstack.repositories.ProductRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,10 +22,11 @@ public class ProductService {
 
     public List<Product> getAll(){return productRepository.findAll();}
 
-    public Product create(String name, String type){
+    public Product create(String name, ProductType type, Date createdDate){
         Product product = new Product();
         product.setName(name);
         product.setType(type);
+        product.setCreatedDate(createdDate);
 
         return productRepository.save(product);
     }
@@ -38,5 +41,15 @@ public class ProductService {
 
     public  void delete(int id){
         productRepository.deleteById(id);
+    }
+
+    public boolean isNameExists(String name) {
+        // Vérifiez si un produit avec le même nom existe déjà dans la base de données
+        return productRepository.existsByName(name);
+    }
+
+    public boolean isTypeExists(ProductType type) {
+        // Vérifiez si un produit avec le même type existe déjà dans la base de données
+        return productRepository.existsByType(type);
     }
 }

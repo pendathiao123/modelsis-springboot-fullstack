@@ -4,11 +4,11 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
-public class Product implements Serializable {
+public class ProductType implements Serializable {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -16,9 +16,9 @@ public class Product implements Serializable {
 
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "type_id")
-    private ProductType type;
+    @OneToMany
+    @JoinColumn(name = "products")
+    private List<Product> productList;
 
-    private Date createdDate;
 }
+
